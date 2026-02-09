@@ -1,5 +1,4 @@
 import Background from "./Background"
-import Features from "./Features"
 import Stats from "./Stats"
 import Process from "./Process"
 import Testimonials from "./Testimonials"
