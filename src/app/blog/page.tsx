@@ -1,5 +1,7 @@
 import Link from "next/link"
 import { extractTextFromRichText, getBlogs } from "@/lib/strapi"
+import { Blog } from "@/types/blog"
+
 
 export default async function BlogPage() {
   const blogs = await getBlogs()
@@ -23,7 +25,7 @@ export default async function BlogPage() {
           role="list"
           className="mt-20 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {blogs.map((blog: any) => {
+          {blogs.map((blog: Blog) => {
             const excerpt = extractTextFromRichText(blog.content)
 
             return (
@@ -33,9 +35,9 @@ export default async function BlogPage() {
               >
                 {/* Image */}
                 <div className="relative h-56 overflow-hidden">
-                  {blog.featured_image ? (
+                  {blog.image ? (
                     <img
-                      src={`${blog.featured_image}`}
+                      src={`${blog.image}`}
                       alt={blog.title}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />

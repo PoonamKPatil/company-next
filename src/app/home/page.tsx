@@ -6,5 +6,5 @@ import React from 'react'
 export default async function Page() {
     const siteSettings = await getSiteSettings()
 
-    return  <HomePage siteSettings={siteSettings} services={siteSettings.services}/>
+    return  <HomePage siteSettings={siteSettings}/>
 }

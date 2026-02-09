@@ -1,7 +1,11 @@
 import { getStrapiMedia } from "@/lib/strapi"
-import Image from "next/image"
+import { SiteSettings } from "@/types/sitesetting"
 
-export default function Background({ siteSettings }: any) {
+type BackgroundProps = {
+  siteSettings: SiteSettings
+}
+
+export default function Background({ siteSettings }: BackgroundProps) {
     const logoUrl = getStrapiMedia(siteSettings?.logo?.url)
   return (
     <section className="relative h-[90vh] flex items-center">

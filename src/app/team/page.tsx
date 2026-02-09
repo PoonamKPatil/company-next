@@ -1,4 +1,5 @@
 import { extractTextFromRichText, getTeams } from "@/lib/strapi"
+import { Team } from "@/types/team"
 import Link from "next/link"
 
 export default async function TeamPage() {
@@ -24,7 +25,7 @@ export default async function TeamPage() {
           role="list"
           className="mt-20 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {teams.map((team: any) => (
+          {teams.map((team: Team) => (
             <li
               key={team.id}
               className="group rounded-2xl bg-slate-800/60 p-8 text-center shadow-lg backdrop-blur transition hover:-translate-y-1 hover:bg-slate-800"
@@ -33,7 +34,7 @@ export default async function TeamPage() {
                   {/* Avatar */}
                   <div className="mx-auto h-40 w-40 overflow-hidden rounded-full ring-4 ring-slate-700">
                     <img
-                      src={team.photo}
+                      src={team.image}
                       alt={team.name}
                       className="h-full w-full object-cover"
                     />

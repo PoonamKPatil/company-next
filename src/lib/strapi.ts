@@ -1,3 +1,7 @@
+import { Blog } from "@/types/blog"
+import { RichTextChild, RichTextContent } from "@/types/common"
+import { Team } from "@/types/team"
+
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL
 
 export async function fetchFromStrapi(path: string) {
@@ -27,9 +31,9 @@ export async function getTeams() {
   const res = await fetchFromStrapi(
     "/api/team-members?populate=*"
   )
-  const teams = res?.data.map((item: any) => ({
+  const teams = res?.data.map((item: Team) => ({
     ...item,
-    photo: item.photo
+    image: item.photo
       ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${item.photo.url}`
       : null,
   }))
@@ -40,9 +44,9 @@ export async function getBlogs() {
   const res = await fetchFromStrapi(
     "/api/blogs?populate=*"
   )
-  const blogs = res?.data.map((item: any) => ({
+  const blogs = res?.data.map((item: Blog) => ({
     ...item,
-    featured_image: item.featured_image
+    image: item.featured_image
       ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${item.featured_image.url}`
       : null,
   }))
@@ -87,22 +91,19 @@ export async function getFooter() {
   return res?.data ?? null
 }
 
-export function getStrapiMedia(url?: string) {
+export function getStrapiMedia(url?: string | Blob | undefined) {
   if (!url) return null
-
-  // already absolute
-  if (url.startsWith("http")) return url
 
   return `${process.env.NEXT_PUBLIC_STRAPI_URL}${url}`
 }
   
 
-export function extractTextFromRichText(blocks: any[]) {
+export function extractTextFromRichText(blocks: RichTextContent | null | undefined) {
   if (!Array.isArray(blocks)) return ""
 
   return blocks
     .map(block =>
-      block.children?.map((child: any) => child.text).join("")
+      block.children?.map((child: RichTextChild) => child.text).join("")
     )
     .join(" ")
 }

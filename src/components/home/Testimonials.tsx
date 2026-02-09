@@ -1,10 +1,14 @@
 "use client"
 
 import { extractTextFromRichText } from "@/lib/strapi"
+import { Testimonial } from "@/types/testimonial"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useEffect, useState } from "react"
 
-export default function Testimonials({ testimonials }: any) {
+type TestimonialsProps = {
+  testimonials: Testimonial[]
+}
+export default function Testimonials({ testimonials }: TestimonialsProps) {
   const [visible, setVisible] = useState(3)
   const [page, setPage] = useState(0)
 
@@ -44,7 +48,7 @@ export default function Testimonials({ testimonials }: any) {
 
         {/* Cards */}
         <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
-          {cards.map((t: any) => (
+          {cards.map((t: Testimonial) => (
             <div
               key={t.id}
               className="rounded-3xl bg-gray-800 p-8 text-white shadow-xl flex flex-col justify-between"

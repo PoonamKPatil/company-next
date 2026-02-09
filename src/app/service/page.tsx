@@ -1,4 +1,5 @@
 import { extractTextFromRichText, getServices } from "@/lib/strapi"
+import { Service } from "@/types/service"
 
 export default async function ServicesPage() {
   const services = await getServices()
@@ -22,7 +23,7 @@ export default async function ServicesPage() {
           role="list"
           className="mt-20 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {services.map((service: any) => {
+          {services.map((service: Service) => {
             const imageUrl = `http://localhost:1337${service.image?.url}`
 
             return (
