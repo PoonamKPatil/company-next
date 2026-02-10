@@ -34,11 +34,24 @@ export async function getTeams() {
   const teams = res?.data.map((item: Team) => ({
     ...item,
     image: item.photo
-      ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${item.photo.url}`
+      ? resolveStrapiMediaUrl(item.photo.url)
       : null,
   }))
   return teams
 }
+
+export function resolveStrapiMediaUrl(
+  url?: string | Blob
+): string | null {
+  if (!url || typeof url !== "string") return null
+
+  // Cloudinary / CDN → already absolute
+  if (url.startsWith("http")) return url
+
+  // Local / relative uploads
+  return `${STRAPI_URL}${url}`
+}
+
 
 export async function getBlogs() {
   const res = await fetchFromStrapi(
@@ -47,7 +60,7 @@ export async function getBlogs() {
   const blogs = res?.data.map((item: Blog) => ({
     ...item,
     image: item.featured_image
-      ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${item.featured_image.url}`
+      ? resolveStrapiMediaUrl(item.featured_image.url)
       : null,
   }))
   return blogs
@@ -64,7 +77,7 @@ export async function getBlogBySlug(slug: string) {
   return {
     ...blogData,
     featured_image: blogData.featured_image
-      ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${blogData.featured_image.url}`
+      ? resolveStrapiMediaUrl(blogData.featured_image.url)
       : null,
   }
 }
@@ -79,7 +92,7 @@ export async function getTeamBySlug(documentId: string) {
   return {
     ...teamData,
     photo: teamData.photo
-      ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${teamData.photo.url}`
+      ? resolveStrapiMediaUrl(teamData.photo.url)
       : null,
   }
 }
@@ -94,7 +107,7 @@ export async function getFooter() {
 export function getStrapiMedia(url?: string | Blob | undefined) {
   if (!url) return null
 
-  return `${process.env.NEXT_PUBLIC_STRAPI_URL}${url}`
+  return resolveStrapiMediaUrl(typeof url === "string" ? url : "")
 }
   
 

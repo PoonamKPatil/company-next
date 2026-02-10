@@ -7,7 +7,7 @@ export type Blog = {
     author: string
     published_date: string
     featured_image : {
-        url: string | Blob | null 
+        url: string | Blob | undefined 
     }
     image : string | Blob | undefined
     content: RichTextContent
