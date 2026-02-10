@@ -1,4 +1,4 @@
-import { extractTextFromRichText, getServices } from "@/lib/strapi"
+import { extractTextFromRichText, getServices, getStrapiMedia } from "@/lib/strapi"
 import { Service } from "@/types/service"
 
 export default async function ServicesPage() {
@@ -24,8 +24,6 @@ export default async function ServicesPage() {
           className="mt-20 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3"
         >
           {services.map((service: Service) => {
-            const imageUrl = `http://localhost:1337${service.image?.url}`
-
             return (
               <li
                 key={service.id}
@@ -33,7 +31,7 @@ export default async function ServicesPage() {
               >
                 {/* Background image */}
                 <img
-                  src={imageUrl}
+                  src={service.image?.url}
                   alt={service.title}
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
